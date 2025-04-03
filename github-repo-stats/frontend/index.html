@@ -3,16 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Repo Stats</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>GitRepo Analyser</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>🔍 GitHub Repo Stats</h1>
-        <input type="text" id="repo-url" placeholder="Paste GitHub repo URL here...">
-        <button onclick="fetchRepo()">Get Stats</button>
-        <div id="repo-details"></div>
-    </div>
-    <script src="./script.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">⚡ GitRepo Analyser</div>
+        <ul class="nav-links">
+            <li><a href="#">abhishek</a></li>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Analyze <br> GitHub Repos</h1>
+            <h1><span class="highlight">Like Never</span> <br> <span class="highlight">Before</span></h1>
+            <p>Get deep insights into your GitHub repositories. Understand patterns, track metrics, and make data-driven decisions.</p>
+            <div class="input-container">
+               <div class="container">
+                <input type="text" id="repo-url" placeholder="Paste GitHub repo URL here...">
+                <button onclick="fetchRepo()">Get Stats</button>
+                <div id="repo-details"></div>
+               </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <img src="laptop-code.jpg" alt="Laptop with code">
+        </div>
+    </section>
+
+    <script src="./main_script.js"></script>
 </body>
 </html>
