@@ -176,6 +176,28 @@ body {
     text-decoration: underline;
 }
 
+/* Graph Section */
+.graph-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.graph-container h2 {
+    text-align: center;
+    color: #0073e6;
+    margin-bottom: 20px;
+}
+
+canvas {
+    max-width: 100%;
+    margin: 20px auto;
+    display: block;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .stats-container {
@@ -192,5 +214,13 @@ body {
 
     .stats-container p {
         font-size: 14px;
+    }
+
+    .graph-container {
+        padding: 15px;
+    }
+
+    .graph-container h2 {
+        font-size: 18px;
     }
 }

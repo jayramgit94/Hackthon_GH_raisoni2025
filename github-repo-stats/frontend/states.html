@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repository Stats</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./dash_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="states_script.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -23,9 +25,16 @@
     <section class="stats">
         <div class="stats-container">
             <h1>Repository Statistics</h1>
-            <div id="repo-stats">
-                <!-- Repository stats will be dynamically inserted here -->
+            <div id="repo-summary">
+                <!-- Repository summary will be dynamically inserted here -->
             </div>
+        </div>
+
+        <!-- Graph Section -->
+        <div class="graph-container">
+            <h2>Graphical Representation</h2>
+            <canvas id="contributorsChart"></canvas>
+            <canvas id="issuesChart"></canvas>
         </div>
     </section>
 </body>
