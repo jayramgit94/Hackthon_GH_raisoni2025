@@ -9,7 +9,7 @@ const app = express();
 // ✅ Allow Netlify frontend + localhost during development
 const allowedOrigins = [
     "http://localhost:5500", // change if you're using another local port
-    "https://github-repo-visualize.netlify.app/" // 🔁 replace with your actual Netlify domain
+    "https://67f0c752317a985c8beacffa--lucent-begonia-ed248d.netlify.app" // 🔁 replace with your actual Netlify domain
 ];
 
 app.use(cors({
