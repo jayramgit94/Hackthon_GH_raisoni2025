@@ -1,5 +1,4 @@
 const API_BASE = "https://hackthon-gh-raisoni2025.onrender.com";
-
 async function fetchRepo() {
     const repoUrl = document.getElementById("repo-url").value;
     if (!repoUrl) {
@@ -8,7 +7,7 @@ async function fetchRepo() {
     }
 
     try {
-        const response = await fetch(`${API_BASE}/repo?url=${encodeURIComponent(repoUrl)}`);
+        const response = await fetch(`/repo?url=${encodeURIComponent(repoUrl)}`);
         const data = await response.json();
 
         if (data.error) {
