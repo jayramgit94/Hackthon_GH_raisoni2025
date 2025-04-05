@@ -5,18 +5,31 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+
+// ✅ Allow Netlify frontend + localhost during development
+const allowedOrigins = [
+    "http://localhost:5500", // change if you're using another local port
+    "https://github-repo-visualize.netlify.app/" // 🔁 replace with your actual Netlify domain
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error("Not allowed by CORS"));
+    }
+}));
+
 app.use(express.json());
 
-// Serve static files from the "frontend" directory
+// ✅ Serve static files (for local development only)
 app.use(express.static(path.join(__dirname, "../frontend")));
-
-const GITHUB_API_BASE = "https://api.github.com/repos";
-
-// Serve the landing page (index.html)
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
+
+const GITHUB_API_BASE = "https://api.github.com/repos";
 
 // 🟢 Fetch Repository Details
 app.get("/repo", async (req, res) => {
@@ -24,22 +37,13 @@ app.get("/repo", async (req, res) => {
         const { url } = req.query;
         if (!url) return res.status(400).json({ error: "GitHub repo URL is required!" });
 
-        // Extract owner & repo name from URL
         const [owner, repo] = url.replace("https://github.com/", "").split("/");
 
-        // Fetch repository details
         const { data: repoData } = await axios.get(`${GITHUB_API_BASE}/${owner}/${repo}`);
-
-        // Fetch contributors
         const { data: contributorsData } = await axios.get(`${GITHUB_API_BASE}/${owner}/${repo}/contributors`);
-
-        // Fetch pull requests
         const { data: pullRequestsData } = await axios.get(`${GITHUB_API_BASE}/${owner}/${repo}/pulls?state=all`);
-
-        // Fetch issues
         const { data: issuesData } = await axios.get(`${GITHUB_API_BASE}/${owner}/${repo}/issues?state=all`);
 
-        // Calculate statistics
         const topContributors = contributorsData.map(user => ({
             username: user.login,
             avatar: user.avatar_url,
@@ -47,16 +51,16 @@ app.get("/repo", async (req, res) => {
             contributions: user.contributions
         })).sort((a, b) => b.contributions - a.contributions).slice(0, 5);
 
-        const prFrequency = pullRequestsData.length / (new Date(repoData.updated_at) - new Date(repoData.created_at)) * 1000 * 60 * 60 * 24; // PRs per day
+        const prFrequency = pullRequestsData.length / ((new Date(repoData.updated_at) - new Date(repoData.created_at)) / (1000 * 60 * 60 * 24)); // PRs per day
 
         const issueResolutionTimes = issuesData
             .filter(issue => issue.state === "closed" && issue.closed_at)
             .map(issue => new Date(issue.closed_at) - new Date(issue.created_at));
+
         const avgIssueResolutionTime = issueResolutionTimes.length
             ? issueResolutionTimes.reduce((a, b) => a + b, 0) / issueResolutionTimes.length
             : 0;
 
-        // 📌 Response Data
         const result = {
             name: repoData.full_name,
             description: repoData.description,
@@ -66,7 +70,10 @@ app.get("/repo", async (req, res) => {
             watchers: repoData.subscribers_count,
             language: repoData.language,
             lastUpdated: repoData.updated_at,
-            owner: { avatar: repoData.owner.avatar_url, profile: repoData.owner.html_url },
+            owner: {
+                avatar: repoData.owner.avatar_url,
+                profile: repoData.owner.html_url
+            },
             topContributors,
             prFrequency,
             avgIssueResolutionTime
@@ -80,6 +87,6 @@ app.get("/repo", async (req, res) => {
     }
 });
 
-// Start Server
+// 🚀 Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
