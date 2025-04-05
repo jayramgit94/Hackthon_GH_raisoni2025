@@ -198,3 +198,36 @@ body {
     color: #6a5acd;
     margin-bottom: 10px;
 }
+.owner-section {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.owner-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.owner-profile {
+  font-size: 16px;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.owner-profile:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .owner-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .owner-profile {
+    font-size: 14px;
+  }
+}
