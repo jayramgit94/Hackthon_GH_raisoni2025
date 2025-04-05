@@ -8,22 +8,26 @@ const app = express();
 
 // ✅ Allow Netlify frontend + localhost during development
 const allowedOrigins = [
-    "http://localhost:5500", // change if you're using another local port
-    "https://67f0c752317a985c8beacffa--lucent-begonia-ed248d.netlify.app" // 🔁 replace with your actual Netlify domain
+    "http://localhost:5500",
+    "https://67f0c752317a985c8beacffa--lucent-begonia-ed248d.netlify.app"
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps or curl)
+        // If there's no origin (like with curl or some mobile apps), allow it
         if (!origin) return callback(null, true);
+
+        // ✅ Check against allowed origins
         if (allowedOrigins.includes(origin)) return callback(null, true);
+
+        // ❌ Block everything else
         return callback(new Error("Not allowed by CORS"));
     }
 }));
 
 app.use(express.json());
 
-// ✅ Serve static files (for local development only)
+// ✅ Serve static files for local testing (optional)
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
@@ -31,7 +35,7 @@ app.get("/", (req, res) => {
 
 const GITHUB_API_BASE = "https://api.github.com/repos";
 
-// 🟢 Fetch Repository Details
+// 🟢 API Endpoint to Fetch GitHub Repo Details
 app.get("/repo", async (req, res) => {
     try {
         const { url } = req.query;
@@ -87,6 +91,6 @@ app.get("/repo", async (req, res) => {
     }
 });
 
-// 🚀 Start Server
+// 🚀 Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
