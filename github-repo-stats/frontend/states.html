@@ -1,213 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Repository Stats</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="states_script.js" defer></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repository Stats</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="states_script.js" defer></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
 
-    body {
-      background-color: #f1f2f6;
-      font-family: 'Poppins', sans-serif;
-      color: #2d3436;
-    }
+      body {
+        background-color: #f1f2f6;
+        font-family: "Poppins", sans-serif;
+        color: #2d3436;
+      }
 
-    nav.navbar {
-      background-color: #2d3436;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 32px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+      nav.navbar {
+        background-color: #2d3436;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 32px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    .navbar .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
+      .navbar .logo {
+        font-size: 24px;
+        font-weight: bold;
+      }
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-    }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
 
-    .nav-links li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
+      .nav-links li a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
 
-    .nav-links li a:hover {
-      text-decoration: underline;
-    }
+      .nav-links li a:hover {
+        text-decoration: underline;
+      }
 
-    .repo-card {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      padding: 24px;
-      max-width: 960px;
-      margin: 40px auto;
-    }
+      .repo-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        max-width: 960px;
+        margin: 40px auto;
+      }
 
-    .repo-title {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .repo-description {
-      color: #636e72;
-      margin-bottom: 20px;
-    }
-
-    .repo-details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .detail-box {
-      display: flex;
-      align-items: center;
-      border-radius: 12px;
-      padding: 12px;
-      color: #2d3436;
-      transition: transform 0.2s ease;
-      background-color: #f0f0f0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .detail-box:hover {
-      transform: translateY(-3px);
-    }
-
-    .icon {
-      font-size: 24px;
-      margin-right: 12px;
-    }
-
-    .label {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .value {
-      font-size: 18px;
-    }
-
-    .stats-container, .graph-container {
-      max-width: 360px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .stats-container h1,
-    .graph-container h2 {
-      margin-bottom: 16px;
-      font-size: 24px;
-      color: #0984e3;
-    }
-
-    canvas {
-      width: 100% !important;
-      max-width: 100%;
-      height: auto !important;
-      margin-top: 24px;
-      background: white;
-      border-radius: 12px;
-      padding: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    @media (max-width: 600px) {
       .repo-title {
-        font-size: 22px;
+        font-size: 28px;
+        margin-bottom: 8px;
       }
+
+      .repo-description {
+        color: #636e72;
+        margin-bottom: 20px;
+      }
+
+      .repo-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+      }
+
       .detail-box {
-        flex-direction: column;
-        align-items: flex-start;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        padding: 12px;
+        color: #2d3436;
+        transition: transform 0.2s ease;
+        background-color: #f0f0f0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
+
+      .detail-box:hover {
+        transform: translateY(-3px);
+      }
+
       .icon {
-        margin-bottom: 4px;
+        font-size: 24px;
+        margin-right: 12px;
       }
-    }
-    
 
-  
+      .label {
+        font-size: 14px;
+        font-weight: 600;
+      }
 
-    .graph-container {
-  text-align: center;
-  margin: 40px auto;
-  width: 90%;
-  max-width: 1200px;
-}
+      .value {
+        font-size: 18px;
+      }
 
-.charts-wrapper {
-  display: flex;
-  justify-content: space-around;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+      .stats-container,
+      .graph-container {
+        max-width: 360px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
 
-.chart-box {
-  flex: 1 1 45%;
-  min-width: 400px;
-  max-width: 600px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+      .stats-container h1,
+      .graph-container h2 {
+        margin-bottom: 16px;
+        font-size: 24px;
+        color: #0984e3;
+      }
 
-.chart-box canvas {
-  width: 100% !important;
-  height: auto !important;
-}
+      canvas {
+        width: 100% !important;
+        max-width: 100%;
+        height: auto !important;
+        margin-top: 24px;
+        background: white;
+        border-radius: 12px;
+        padding: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
 
+      @media (max-width: 600px) {
+        .repo-title {
+          font-size: 22px;
+        }
+        .detail-box {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .icon {
+          margin-bottom: 4px;
+        }
+      }
 
+      .graph-container {
+        text-align: center;
+        margin: 40px auto;
+        width: 90%;
+        max-width: 1200px;
+      }
 
-  </style>
-</head>
-<body>
+      .charts-wrapper {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">⚡ GitRepo Analyser</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-  </nav>
+      .chart-box {
+        flex: 1 1 45%;
+        min-width: 400px;
+        max-width: 600px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
 
-  <!-- Repo Summary -->
-  <div id="repo-summary" class="repo-card"></div>
+      .chart-box canvas {
+        width: 100% !important;
+        height: auto !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">⚡ GitRepo Analyser</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
 
-  <!-- Graphs -->
-  <section class="graph-container">
-    <h2>Graphical Representation</h2>
-    <div class="charts-wrapper">
-      <div class="chart-box">
-        <canvas id="contributorsChart"></canvas>
+    <!-- Repo Summary -->
+    <div id="repo-summary" class="repo-card"></div>
+
+    <!-- Graphs -->
+    <section class="graph-container">
+      <h2>Graphical Representation</h2>
+      <div class="charts-wrapper">
+        <div class="chart-box">
+          <canvas id="contributorsChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <canvas id="issuesChart"></canvas>
+        </div>
       </div>
-      <div class="chart-box">
-        <canvas id="issuesChart"></canvas>
-      </div>
-    </div>
-  </section>
-  
-  
-  
+    </section>
 
-</body>
+
+    <!-- cursor added -->
+
+    <script>
+      document.addEventListener("click", (e) => {
+        for (let i = 0; i < 10; i++) {
+          let particle = document.createElement("span");
+          particle.className = "particle";
+          document.body.appendChild(particle);
+          particle.style.left = e.clientX + "px";
+          particle.style.top = e.clientY + "px";
+          const size = Math.random() * 10 + 5;
+          particle.style.width = particle.style.height = size + "px";
+          particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          const animation = particle.animate(
+            [
+              { transform: `translate(0, 0)` },
+              {
+                transform: `translate(${(Math.random() - 0.5) * 200}px, ${
+                  (Math.random() - 0.5) * 200
+                }px)`,
+              },
+            ],
+            { duration: 1000, easing: "ease-out" }
+          );
+          animation.onfinish = () => particle.remove();
+        }
+      });
+    </script>
+    <style>
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1000;
+      }
+    </style>
+  </body>
 </html>

@@ -58,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     generateIssuesChart(repoStats);
   });
   
+
+  
   // Chart 1: Contributors
   function generateContributorsChart(contributors) {
     const ctx = document.getElementById("contributorsChart").getContext("2d");
