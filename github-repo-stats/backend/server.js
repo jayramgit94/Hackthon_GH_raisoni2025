@@ -9,9 +9,11 @@ const app = express();
 // ✅ Allowed Origins: Localhost (for dev), Netlify frontend, Render backend
 const allowedOrigins = [
     "http://localhost:5500",
-    "https://67f0c752317a985c8beacffa--lucent-begonia-ed248d.netlify.app",
+    "https://lucent-begonia-ed248d.netlify.app", // ✅ Netlify Production
+    "https://67f0c752317a985c8beacffa--lucent-begonia-ed248d.netlify.app", // ✅ Netlify Preview
     "https://git-repo-analyzer.onrender.com"
 ];
+
 
 app.use(cors({
     origin: function (origin, callback) {
